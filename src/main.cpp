@@ -131,8 +131,8 @@ int main(int argc, char** argv) {
     ros::init(argc, argv, "adjust_and_control_node");
     ros::NodeHandle nh;
     //motorStarted = false;
-    ros::ServiceServer addThreeService = nh.advertiseService("/add_three_service", addThreeCallback);
-    ros::ServiceServer reduceThreeService = nh.advertiseService("/reduce_three_service", reduceThreeCallback);
+    ros::ServiceServer addThreeService = nh.advertiseService("/lac_add_service", addThreeCallback);
+    ros::ServiceServer reduceThreeService = nh.advertiseService("/lac_reduce_service", reduceThreeCallback);
     ros::Publisher servoPosePub = nh.advertise<std_msgs::Int32>("/servo_pose", 1);
     ROS_INFO("Ready to add or reduce values to the current value.");
 
