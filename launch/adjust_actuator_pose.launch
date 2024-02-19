@@ -1,0 +1,8 @@
+<launch>
+    
+    <node pkg="adjust_actuator_pose" type="adjust_and_control_node" name="adjust_and_control_node" output="screen">
+      
+    </node>
+  
+
+</launch>
