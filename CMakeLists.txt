@@ -23,4 +23,3 @@ add_executable(anticlockwise_node src/main2.cpp)
 target_link_libraries(anticlockwise_node ${catkin_LIBRARIES})
 add_executable(adjust_and_control_node src/main.cpp)
 target_link_libraries(adjust_and_control_node ${catkin_LIBRARIES})
-
