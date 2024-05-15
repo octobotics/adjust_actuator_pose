@@ -179,7 +179,7 @@ void wireValueCallback(const std_msgs::Float32::ConstPtr& msg) {
 
     if (motorAnticlockwiseStarted) {
         double currentWireValueSnapshot = currentWireValue.load();
-        if (currentWireValueSnapshot <= 0.024) {
+        if (currentWireValueSnapshot <= 0.016) {
             stop();
         }
     }
@@ -196,10 +196,15 @@ void checkMotorStatus(const ros::TimerEvent& event) {
 int main(int argc, char** argv) {
     ros::init(argc, argv, "adjust_and_control_node");
     ros::NodeHandle nh;
+
+    
   
     ros::ServiceServer addThreeService = nh.advertiseService("/add_three_service", addThreeCallback);
     ros::ServiceServer reduceThreeService = nh.advertiseService("/reduce_three_service", reduceThreeCallback);
     ros::Publisher servoPosePub = nh.advertise<std_msgs::Int32>("/servo_pose", 1);
+    std_msgs::Int32 msg;
+    msg.data = 65;
+    servoPosePub.publish(msg);
     ros::Subscriber servoPoseSub = nh.subscribe("/servo_pose", 1, servoPoseCallback);
     currentServoPosePub = nh.advertise<std_msgs::Int32>("/current_servo_pose", 1);
     ros::Timer timer = nh.createTimer(ros::Duration(0.1), checkMotorStatus);
