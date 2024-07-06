@@ -32,8 +32,8 @@ bool motorstopServiceCallback(std_srvs::Trigger::Request& req, std_srvs::Trigger
 void stopIfWireValueReached();
 
 ros::Publisher currentServoPosePub;
-int current_value = 100;
-const int MIN_VALUE = 65;
+int current_value = 3;
+const int MIN_VALUE = 1;
 const int MAX_VALUE = 254;
 
 void servoPoseCallback(const std_msgs::Int32::ConstPtr& msg) {
@@ -60,7 +60,7 @@ void publishServoPose(ros::Publisher& servoPosePub, int value) {
 }
 
 bool addThreeCallback(std_srvs::Trigger::Request& req, std_srvs::Trigger::Response& res) {
-    int newValue = current_value + 13;
+    int newValue = current_value + 3;
     current_value = std::min(newValue, MAX_VALUE);
 
     ros::NodeHandle nh;
@@ -76,7 +76,7 @@ bool addThreeCallback(std_srvs::Trigger::Request& req, std_srvs::Trigger::Respon
 }
 
 bool reduceThreeCallback(std_srvs::Trigger::Request& req, std_srvs::Trigger::Response& res) {
-    int newValue = current_value - 13;
+    int newValue = current_value - 3;
     current_value = std::max(newValue, MIN_VALUE);
 
     ros::NodeHandle nh;
@@ -199,9 +199,9 @@ int main(int argc, char** argv) {
     ros::ServiceServer addThreeService = nh.advertiseService("/add_three_service", addThreeCallback);
     ros::ServiceServer reduceThreeService = nh.advertiseService("/reduce_three_service", reduceThreeCallback);
     ros::Publisher servoPosePub = nh.advertise<std_msgs::Int32>("/servo_pose", 1);
-    std_msgs::Int32 msg;
-    msg.data = 65;
-    servoPosePub.publish(msg);
+    // std_msgs::Int32 msg;
+    // msg.data = 65;
+    // servoPosePub.publish(msg);
     ros::Subscriber servoPoseSub = nh.subscribe("/servo_pose", 1, servoPoseCallback);
     currentServoPosePub = nh.advertise<std_msgs::Int32>("/current_servo_pose", 1);
     ros::Timer timer = nh.createTimer(ros::Duration(0.1), checkMotorStatus);
